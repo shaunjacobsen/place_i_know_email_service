@@ -1,0 +1,12 @@
+{
+  "name": "email-service",
+  "version": "1.0.0",
+  "description": "Email processing microservice for Place I Know v2",
+  "main": "app.js",
+  "author": "Shaun Jacobsen",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "amqplib": "^0.5.2"
+  }
+}
