@@ -1,4 +1,5 @@
 const amqp = require('amqplib/callback_api');
+const { sendForgotPasswordEmail } = require('./actions/email');
 require('./config/config');
 
 amqp.connect(process.env.AMQP_SERVER, (err, connection) => {
@@ -10,11 +11,18 @@ amqp.connect(process.env.AMQP_SERVER, (err, connection) => {
     channel.consume(
       queue,
       message => {
-        console.log('message received', message.content.toString());
-        setTimeout(() => {
-          console.log('message processed', message.content.toString());
-          channel.ack(message);
-        });
+        const payload = JSON.parse(message.content.toString());
+        console.log('message received', payload);
+        switch (payload.template) {
+          case 'FORGOT_PASSWORD':
+            sendForgotPasswordEmail(payload)
+              .then(() => channel.ack(message))
+              .catch(e => console.log(e));
+            break;
+          default:
+            return;
+        }
+        console.log('message processed', message.content.toString());
       },
       { noAck: false }
     );
