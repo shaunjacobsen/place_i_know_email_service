@@ -6,6 +6,9 @@
   "author": "Shaun Jacobsen",
   "license": "UNLICENSED",
   "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
   "dependencies": {
     "amqplib": "^0.5.2",
     "sparkpost": "^2.1.2"
